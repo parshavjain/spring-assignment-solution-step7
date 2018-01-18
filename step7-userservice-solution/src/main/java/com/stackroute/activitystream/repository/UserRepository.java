@@ -26,7 +26,7 @@ public interface UserRepository extends CrudRepository<User, String>{
 	* Write query to validate user using username and password.
 	* For example : @Query("select u from User u where u.username = (?1) and u.password = (?2)")
 	* */
-	@Query
+	@Query("from User where username = (?1) and password = (?2)")
 	User validate(String username,String password);
 	
 }

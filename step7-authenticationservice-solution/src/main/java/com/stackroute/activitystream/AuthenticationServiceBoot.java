@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.stackroute.activitystream.config.JwtFilter;
 
@@ -11,7 +12,7 @@ import com.stackroute.activitystream.config.JwtFilter;
  * The @SpringBootApplication annotation is equivalent to using @Configuration, @EnableAutoConfiguration 
  * and @ComponentScan with their default attributes
  */
-
+@SpringBootApplication
 public class AuthenticationServiceBoot {
 
 	/*
@@ -21,8 +22,10 @@ public class AuthenticationServiceBoot {
 	 */
 	@Bean
 	public FilterRegistrationBean jwtFilter() {
-
-		return null;
+		final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+		registrationBean.setFilter(new JwtFilter());
+		registrationBean.addUrlPatterns("/api/*");
+		return registrationBean;
 	}
 
 	/*

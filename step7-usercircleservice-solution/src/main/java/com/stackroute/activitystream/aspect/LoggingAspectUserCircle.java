@@ -17,9 +17,68 @@ import org.slf4j.LoggerFactory;
 
 @Aspect
 public class LoggingAspectUserCircle {
-	/*Write loggers for each of the methods of REST controller, 
-    any particular method will have all the four aspectJ annotation
-    (@Before, @After, @AfterReturning, @AfterThrowing).*/
-    
+
+	private static final Logger logger = LoggerFactory.getLogger(LoggingAspectUserCircle.class);
+	
 		
+	@Before("execution(* com.stackroute.activitystream.controller.UserCircleController.addUser(..))")
+	public void logBeforeAddUser(JoinPoint joinPoint) {
+
+		logger.info("============@Before==========");
+		logger.debug("Method Name : " + joinPoint.getSignature().getName());
+		logger.debug("*********************************");
+
+	}
+
+	@After("execution(* com.stackroute.activitystream.controller.UserCircleController.addUser(..))")
+	public void logAfterAddUser(JoinPoint joinPoint) {
+
+		logger.info("============@After==========");
+		logger.debug("Method Name : " + joinPoint.getSignature().getName());
+		logger.debug("Method arguments : " + Arrays.toString(joinPoint.getArgs()));
+		logger.debug("*********************************");
+
+	}
+
+	
+	
+	@Before("execution(* com.stackroute.activitystream.controller.UserCircleController.removeUser(..))")
+	public void logBeforeRemoveUser(JoinPoint joinPoint) {
+
+		logger.info("============@Before==========");
+		logger.debug("Method Name : " + joinPoint.getSignature().getName());
+		logger.debug("*********************************");
+
+	}
+
+	@After("execution(* com.stackroute.activitystream.controller.UserCircleController.removeUser(..))")
+	public void logAfterRemoveUser(JoinPoint joinPoint) {
+
+		logger.info("============@After==========");
+		logger.debug("Method Name : " + joinPoint.getSignature().getName());
+		logger.debug("Method arguments : " + Arrays.toString(joinPoint.getArgs()));
+		logger.debug("*********************************");
+
+	}
+
+	@Before("execution(* com.stackroute.activitystream.controller.UserCircleController.getMyCircles(..))")
+	public void logBeforeGetMyCircles(JoinPoint joinPoint) {
+
+		logger.info("============@Before==========");
+		logger.debug("Method Name : " + joinPoint.getSignature().getName());
+		logger.debug("*********************************");
+
+	}
+
+	@After("execution(* com.stackroute.activitystream.controller.UserCircleController.getMyCircles(..))")
+	public void logAfterGetMyCircles(JoinPoint joinPoint) {
+
+		logger.info("============@After==========");
+		logger.debug("Method Name : " + joinPoint.getSignature().getName());
+		logger.debug("Method arguments : " + Arrays.toString(joinPoint.getArgs()));
+		logger.debug("*********************************");
+
+	}
+
+	
 }

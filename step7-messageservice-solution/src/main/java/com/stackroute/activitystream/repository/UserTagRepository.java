@@ -7,6 +7,7 @@ import com.stackroute.activitystream.model.UserTag;
 * This class is implementing the JpaRepository interface for UserTag.
 * */
 public interface UserTagRepository extends JpaRepository<UserTag, String>{
+
 	/*
 	* Apart from the standard CRUD methods already available in JPA Repository, based
 	* on our requirements, we might need to create few query methods for getting 
@@ -22,7 +23,7 @@ public interface UserTagRepository extends JpaRepository<UserTag, String>{
 	* 
 	* Write a query to retrieve UserTag object from database matching with username and tag.
 	* */	
-	@Query
+	@Query("FROM UserTag where username = (?1) and tag = (?2)")
 	public UserTag getUserTag(String username, String tag);
 	
 }
