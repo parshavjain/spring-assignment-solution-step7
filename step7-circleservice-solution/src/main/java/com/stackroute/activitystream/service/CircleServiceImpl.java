@@ -38,7 +38,9 @@ public class CircleServiceImpl implements CircleService {
 			if (null != circle.getCreatorId()) {
 				circle.setCreatorId(circle.getCreatorId().toLowerCase());
 			}
-
+			if (null != circle.getCircleName()) {
+				circle.setCircleName(circle.getCircleName().toLowerCase());
+			}
 			if (null != circle.getCircleName()) {
 				Circle tempCircle = circleRepository.findOne(circle.getCircleName());
 				if (null == tempCircle) {
@@ -57,8 +59,7 @@ public class CircleServiceImpl implements CircleService {
 	 * This method should return the list of existing circles
 	 */
 	public List<Circle> getAllCircles() {
-		List<Circle> circles = new ArrayList<Circle>();
-		circleRepository.findAll().forEach(circles::add);
+		List<Circle> circles = circleRepository.findAll();
 		return circles;
 	}
 

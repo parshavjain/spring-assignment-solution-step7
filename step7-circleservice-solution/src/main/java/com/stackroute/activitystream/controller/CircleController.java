@@ -101,7 +101,7 @@ public class CircleController {
 	 * using HTTP GET method" where "searchString" should be replaced with the
 	 * actual search keyword without the {}
 	 */
-	@RequestMapping(value = "/search/{searchString}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/circle/search/{searchString}", method = RequestMethod.GET)
 	public ResponseEntity<List<Circle>> getAllCirclesBasedOnSearchCriteria(
 			@PathVariable("searchString") String searchString) {
 		return new ResponseEntity<List<Circle>>(circleService.getAllCircles(searchString), HttpStatus.OK);
