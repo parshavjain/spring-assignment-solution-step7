@@ -67,8 +67,7 @@ public class CircleServiceImpl implements CircleService {
 	 * search String
 	 */
 	public List<Circle> getAllCircles(String searchString) {
-		List<Circle> circles = new ArrayList<Circle>();
-		circleRepository.findAll().forEach(circles::add);
+		List<Circle> circles =  circleRepository.findAll(searchString);
 		return circles;
 	}
 

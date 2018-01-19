@@ -27,7 +27,6 @@ import com.stackroute.activitystream.service.UserService;
  * is equivalent to using @Controller and @ResposeBody annotation
  */
 @RestController
-@RequestMapping("/api/user")
 public class UserController {
 
 	/*
@@ -44,7 +43,7 @@ public class UserController {
 	 * 
 	 * This handler method should map to the URL "/api/user" using HTTP GET method
 	*/
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/api/user", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> getAllUsers() {
 		return new ResponseEntity<List<User>>(userService.list(), HttpStatus.OK);
 	}
@@ -57,7 +56,7 @@ public class UserController {
 	 * This handler method should map to the URL "/api/user/{username}" using HTTP GET method
 	 * where "username" should be replaced by a username without {}
 	*/
-	@RequestMapping(value = "/{username}",
+	@RequestMapping(value = "/api/user/{username}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<User> getUser(@PathVariable("username") String username) {
@@ -84,7 +83,7 @@ public class UserController {
 	 * use the app, he will register himself first before login.
 	 * This handler method should map to the URL "/api/user" using HTTP POST method
 	*/
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/api/user", method = RequestMethod.POST)
 	public ResponseEntity<User> registerUser(@RequestBody User user) {
 		if (null != user && null != user.getUsername()) {
 			User tempUser = userService.get(user.getUsername());
@@ -105,7 +104,7 @@ public class UserController {
 	 * 
 	 * This handler method should map to the URL "/api/user/{username}" using HTTP PUT method
 	*/
-	@RequestMapping(value = "/{username}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/api/user/{username}", method = RequestMethod.PUT)
 	public ResponseEntity<User> updateUser(@PathVariable("username") String username, @RequestBody User user) {		
 		if(null != username) {
 			User tempUser = userService.get(username);

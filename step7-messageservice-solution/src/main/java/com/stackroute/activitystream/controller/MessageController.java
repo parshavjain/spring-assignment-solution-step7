@@ -27,7 +27,6 @@ import com.stackroute.activitystream.service.MessageServiceImpl;
  * is equivalent to using @Controller and @ResposeBody annotation
  */
 @RestController
-@RequestMapping("/api/message")
 public class MessageController {
 	/*
 	 * From the problem statement, we can understand that the application requires
@@ -65,7 +64,7 @@ public class MessageController {
 	 * "/api/message/sendMessageToCircle/{circleName}" using HTTP POST method" where
 	 * "circleName" should be replaced by the destination circle name without {}
 	 */
-	@RequestMapping(value = "/sendMessageToCircle/{circleName}", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/message/sendMessageToCircle/{circleName}", method = RequestMethod.POST)
 	private ResponseEntity<Message> sendMessageToCircle(@PathVariable("circleName") String circleName,
 			@RequestBody Message message) {
 		if (null != message && null != circleName) {
@@ -91,7 +90,7 @@ public class MessageController {
 	 * "/api/message/sendMessageToUser/{receiverId}" using HTTP POST method" where
 	 * "receiverId" should be replaced by the recipient user name without {}
 	 */
-	@RequestMapping(value = "/sendMessageToUser/{receiverId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/message/sendMessageToUser/{receiverId}", method = RequestMethod.POST)
 	private ResponseEntity<Message> sendMessageToUser(@PathVariable("receiverId") String receiverId,
 			@RequestBody Message message) {
 		if (null != message && null != receiverId) {
@@ -120,7 +119,7 @@ public class MessageController {
 	 * user name without {} and "pageNumber" should be replaced by the numeric page
 	 * number that we are looking for without {}
 	 */
-	@RequestMapping(value = "/getMessagesByUser/{senderUsername}/{receiverUserName}/{pageNumber}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/message/getMessagesByUser/{senderUsername}/{receiverUserName}/{pageNumber}", method = RequestMethod.GET)
 	private ResponseEntity<List<Message>> getMessagesByUser(@PathVariable("senderUsername") String senderUsername,
 			@PathVariable("receiverUserName") String receiverUserName, @PathVariable("pageNumber") int pageNumber) {
 		return new ResponseEntity<List<Message>>(
@@ -141,7 +140,7 @@ public class MessageController {
 	 * and "pageNumber" should be replaced by the numeric page number that we are
 	 * looking for without {}
 	 */
-	@RequestMapping(value = "/getMessagesByCircle/{circleName}/{pageNumber}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/message/getMessagesByCircle/{circleName}/{pageNumber}", method = RequestMethod.GET)
 	private ResponseEntity<List<Message>> getMessagesByCircle(@PathVariable("circleName") String circleName,
 			@PathVariable("pageNumber") int pageNumber) {
 		return new ResponseEntity<List<Message>>(messageService.getMessagesFromCircle(circleName, pageNumber),
@@ -160,7 +159,7 @@ public class MessageController {
 	 * HTTP GET method"
 	 * 
 	 */
-	@RequestMapping(value = "/listAllTags", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/message/listAllTags", method = RequestMethod.GET)
 	private ResponseEntity<List<String>> listAllTags() {
 		return new ResponseEntity<List<String>>(messageService.listTags(), HttpStatus.OK);
 	}
@@ -179,7 +178,7 @@ public class MessageController {
 	 * should be replaced by the numeric page number that we are looking for without
 	 * {}
 	 */
-	@RequestMapping(value = "/showMessagesWithTag/{tag}/{pageNumber}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/message/showMessagesWithTag/{tag}/{pageNumber}", method = RequestMethod.GET)
 	private ResponseEntity<List<Message>> showMessagesWithTag(@PathVariable("tag") String tag,
 			@PathVariable("pageNumber") int pageNumber) {
 		return new ResponseEntity<List<Message>>(messageService.showMessagesWithTag(tag, pageNumber), HttpStatus.OK);
@@ -199,7 +198,7 @@ public class MessageController {
 	 * "username" should be replaced by a valid user name without {} and "tag"
 	 * should be replaced by a valid tag without {}
 	 */
-	@RequestMapping(value = "/subscribe/{username}/{tag}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/api/message/subscribe/{username}/{tag}", method = RequestMethod.PUT)
 	private ResponseEntity<UserTag> subscribe(@PathVariable("username") String userName,
 			@PathVariable("tag") String tag) {
 		if (null != userName && null != tag) {
@@ -225,7 +224,7 @@ public class MessageController {
 	 * "username" should be replaced by a valid user name without {} and "tag"
 	 * should be replaced by a valid tag without {}
 	 */
-	@RequestMapping(value = "/unsubscribe/{username}/{tag}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/api/message/unsubscribe/{username}/{tag}", method = RequestMethod.PUT)
 	private ResponseEntity<UserTag> unsubscribe(@PathVariable("username") String userName,
 			@PathVariable("tag") String tag) {
 		if (null != userName && null != tag) {
@@ -247,7 +246,7 @@ public class MessageController {
 	 * "/api/message/tags/search/user/{username}" using HTTP GET method" where
 	 * "username" should be replaced by a valid user name without {}
 	 */
-	@RequestMapping(value = "/tags/search/user/{username}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/message/tags/search/user/{username}", method = RequestMethod.GET)
 	private ResponseEntity<List<String>> searchTag(@PathVariable("username") String username) {
 		List<String> tagsList = messageService.listMyTags(username);
 		if (null != tagsList) {

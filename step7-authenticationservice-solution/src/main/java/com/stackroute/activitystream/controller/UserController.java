@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,6 @@ import com.stackroute.activitystream.service.UserServiceImpl;
  * is equivalent to using @Controller and @ResposeBody annotation
  */
 @RestController
-@RequestMapping("/api/user")
 public class UserController {
 	/*
 	 * Autowiring should be implemented for the UserService. 
@@ -44,7 +44,7 @@ public class UserController {
 	 * 
 	 * This handler method should map to the URL "/api/user" using HTTP GET method
 	*/
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping(value = "/api/user")
 	public ResponseEntity<List<User>> getAllUsers() {
 		return new ResponseEntity<List<User>>(userService.list(), HttpStatus.OK);
 	}
@@ -57,9 +57,7 @@ public class UserController {
 	 * This handler method should map to the URL "/api/user/{username}" using HTTP GET method
 	 * where "username" should be replaced by a username without {}
 	*/
-	@RequestMapping(value = "/{username}",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@GetMapping(value = "/api/user/{username}")
 	public ResponseEntity<User> getUser(@PathVariable("username") String username) {
 		if(null != username
 				&& !username.isEmpty()) {
@@ -84,7 +82,7 @@ public class UserController {
 	 * use the app, he will register himself first before login.
 	 * This handler method should map to the URL "/api/user" using HTTP POST method
 	*/
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping(value = "/api/user")
 	public ResponseEntity<User> registerUser(@RequestBody User user) {
 		if (null != user && null != user.getUsername()) {
 			User tempUser = userService.get(user.getUsername());
@@ -105,7 +103,7 @@ public class UserController {
 	 * 
 	 * This handler method should map to the URL "/api/user/{username}" using HTTP PUT method
 	*/
-	@RequestMapping(value = "/{username}", method = RequestMethod.PUT)
+	@PutMapping("/api/user/{username}")
 	public ResponseEntity<User> updateUser(@PathVariable("username") String username, @RequestBody User user) {		
 		if(null != username) {
 			User tempUser = userService.get(username);
@@ -115,5 +113,16 @@ public class UserController {
 			}
 		}
 		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+	}
+	
+	@DeleteMapping("/api/user/{username}")
+	ResponseEntity<User> deleteUser(@PathVariable("username") String username) {
+		User user = userService.get(username);
+		if (user == null) {
+			System.out.println("User with id " + username + " not found");
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		}
+		userService.delete(user);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 }

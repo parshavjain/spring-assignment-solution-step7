@@ -39,7 +39,7 @@ public interface MessageRepository extends CrudRepository<Message, Integer>{
 	 * Write a query to retrieve all messages from the database send between two
 	 * specified users.
 	 */
-	@Query("FROM Message WHERE senderName = (?1) and receiverId = (?2)")
+	@Query("FROM Message where receiverId = (?1) or senderName =(?1) or receiverId = (?2) or senderName =(?2)")
 	public List<Message> getMessagesFromUser(String username, String otherUsername);
 
 	/*
@@ -47,7 +47,7 @@ public interface MessageRepository extends CrudRepository<Message, Integer>{
 	 * write a query for the same.
 	 * 
 	 */
-	@Query("SELECT DISTINCT tag FROM Message")
+	@Query("SELECT tag FROM UserTag")
 	public List<String> listAllTags();
 
 	/*
@@ -55,7 +55,7 @@ public interface MessageRepository extends CrudRepository<Message, Integer>{
 	 * and write a query for the same.
 	 * 
 	 */
-	@Query("SELECT tag FROM Message WHERE senderName = (?1)")
+	@Query("SELECT tag FROM UserTag WHERE username = (?1)")
 	public List<String> listMyTags(String username);
 
 	/*
@@ -71,6 +71,6 @@ public interface MessageRepository extends CrudRepository<Message, Integer>{
 	 * This method will retrieve an UserTag from UserTag table which matches the
 	 * username and tag in parameter, write a query for the same.
 	 */
-	@Query("FROM Message WHERE tag = (?1) and senderName = (?1)")
+	@Query("FROM Message WHERE senderName = (?1) and tag = (?2) ")
 	public UserTag getUserTag(String username, String tag);
 }

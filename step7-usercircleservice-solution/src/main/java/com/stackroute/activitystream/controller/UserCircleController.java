@@ -24,7 +24,6 @@ import com.stackroute.activitystream.service.UserCircleService;
  * is equivalent to using @Controller and @ResposeBody annotation
  */
 @RestController
-@RequestMapping(value = "/api/usercircle")
 public class UserCircleController {
 
 	/*
@@ -48,7 +47,7 @@ public class UserCircleController {
 	 * where "username" should be replaced by a valid username without {} and
 	 * "circleName" should be replaced by a valid circle name without {}
 	 */
-	@RequestMapping(value = "/addToCircle/{username}/{circleName}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/api/usercircle/addToCircle/{username}/{circleName}", method = RequestMethod.PUT)
 	private ResponseEntity<UserCircle> addToCircle(@PathVariable("username") String username,
 			@PathVariable("circleName") String circleName) {
 		UserCircle userCircle = userCircleService.get(username, circleName);
@@ -77,7 +76,7 @@ public class UserCircleController {
 	 * method" where "username" should be replaced by a valid username without {}
 	 * and "circleName" should be replaced by a valid circle name without {}
 	 */
-	@RequestMapping(value = "/removeFromCircle/{username}/{circleName}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/api/usercircle/removeFromCircle/{username}/{circleName}", method = RequestMethod.PUT)
 	private ResponseEntity<UserCircle> removeFromCircle(@PathVariable("username") String userName,
 			@PathVariable("circleName") String circleName) {
 		if (null != circleName) {
@@ -99,7 +98,7 @@ public class UserCircleController {
 	 * "/api/usercircle/searchByUser/{username}" using HTTP GET method where
 	 * "username" should be replaced by a valid username without {}
 	 */
-	@RequestMapping(value = "/searchByUser/{username}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/usercircle/searchByUser/{username}", method = RequestMethod.GET)
 	private ResponseEntity<List<String>> searchByUser(@PathVariable("username") String username) {
 		return new ResponseEntity<List<String>>(userCircleService.getMyCircles(username), HttpStatus.OK);
 	}

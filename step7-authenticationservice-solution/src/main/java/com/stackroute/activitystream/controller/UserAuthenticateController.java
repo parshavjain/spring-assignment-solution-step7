@@ -36,12 +36,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class UserAuthenticateController {
 
 	Map<String, String> map = new HashMap<>();
-
-	@GetMapping("/")
-	public String serverStarted()
-	{
-		return "Authentication server started";
-	}
 	/*
 	 * Autowiring should be implemented for the UserService. Please note that we
 	 * should not create any object using the new keyword
@@ -69,6 +63,9 @@ public class UserAuthenticateController {
 		String jwtToken = "";
 		try {
 			jwtToken = getToken(user.getUsername(), user.getPassword());
+			if(null == jwtToken) {
+				return new ResponseEntity<>(map, HttpStatus.UNAUTHORIZED);
+			}
 			map.clear();
 			map.put("message", "user successfully logged in");
 			map.put("token", jwtToken);
@@ -83,26 +80,17 @@ public class UserAuthenticateController {
 	}
 
 	public String getToken(String username, String password) throws Exception {
-		String jwtToken = "";
+		String jwtToken = null;
 
 		if (null == username || null == password) {
 			throw new ServletException("Please fill in username and password");
 		}
 
-		User user = userService.get(username);
-
-		if (null == user) {
-			throw new ServletException("Invalid credentials.");
+		if (userService.validate(username, password)) {
+		jwtToken = Jwts.builder().setSubject(username).claim("roles", "user")
+					.setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+			
 		}
-
-		String pwd = user.getPassword();
-
-		if (!password.equals(pwd)) {
-			throw new ServletException("Invalid login. Please check your name and password.");
-		}
-
-		jwtToken = Jwts.builder().setSubject(username).claim("roles", "user").setIssuedAt(new Date())
-				.signWith(SignatureAlgorithm.HS256, "secretkey").compact();
 		return jwtToken;
 
 	}

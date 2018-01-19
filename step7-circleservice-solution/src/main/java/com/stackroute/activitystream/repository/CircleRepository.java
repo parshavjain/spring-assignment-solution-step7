@@ -28,8 +28,8 @@ public interface CircleRepository extends JpaRepository<Circle, String> {
 	 * Write query to find all circles matching with search string.
 	 */
 
-	@Query("FROM Circle where creatorId LIKE %?1%")
-	List<Circle> findAll(String username);
+	@Query("FROM Circle  WHERE circleName like (?1)")
+	List<Circle> findAll(String searchString);
 
 	@Query("FROM Circle where circleName = :circleName")
 	Circle findOne(@Param("circleName") String circleName);
